@@ -1,0 +1,27 @@
+# Build output
+bin/
+obj/
+_FINAL/
+.vs/
+*.user
+*.suo
+
+# Captured traffic may contain credentials, cookies, and private data
+*.har
+*.mitm
+*.pcap
+*.pcapng
+*.log
+
+# mitmproxy CA keys and local settings
+.mitmproxy/
+*mitmproxy-ca*.pem
+*mitmproxy-ca*.key
+*.pfx
+*.p12
+
+# Local configuration
+.env
+.env.*
+.vscode/
+.idea/
