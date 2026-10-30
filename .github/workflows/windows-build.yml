@@ -1,0 +1,30 @@
+name: Build Windows standalone EXE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Publish standalone EXE
+        shell: pwsh
+        run: |
+          dotnet publish HarRecorder.csproj -c Release -r win-x64 --self-contained true --nologo `
+            /p:PublishSingleFile=true `
+            /p:IncludeNativeLibrariesForSelfExtract=true `
+            /p:EnableCompressionInSingleFile=true `
+            /p:DebugType=none `
+            /p:DebugSymbols=false
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HarRecorder-windows-x64
+          path: bin/Release/net8.0-windows/win-x64/publish/HarRecorder.exe
+          if-no-files-found: error
